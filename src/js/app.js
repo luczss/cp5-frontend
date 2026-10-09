@@ -4,10 +4,10 @@ const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 const TEAM_BY_CATEGORY = {
   Desenvolvimento: 'Plataforma', Design: 'Design', Dados: 'Dados', Infraestrutura: 'Infra', Marketing: 'Growth'
 };
-const CURRENT_USER = 'Marina Duarte';
+const CURRENT_USER = 'Diego Caio';
 
 const projects = [
-  { id: 1, name: 'Portal do Cliente v2', owner: 'Marina Duarte', category: 'Desenvolvimento', priority: 'Alta', deadline: '2026-11-20', status: 'Em andamento', progress: 68, done: 34, total: 50, description: 'Nova área logada com histórico de chamados, faturas e status de entregas em tempo real.' },
+  { id: 1, name: 'Portal do Cliente v2', owner: 'Diego Caio', category: 'Desenvolvimento', priority: 'Alta', deadline: '2026-11-20', status: 'Em andamento', progress: 68, done: 34, total: 50, description: 'Nova área logada com histórico de chamados, faturas e status de entregas em tempo real.' },
   { id: 2, name: 'Migração para Cloud', owner: 'Rafael Nogueira', category: 'Infraestrutura', priority: 'Alta', deadline: '2026-12-05', status: 'Em andamento', progress: 41, done: 19, total: 46, description: 'Transferência dos serviços legados para containers, com janela de corte planejada para dezembro.' },
   { id: 3, name: 'Redesign do App Mobile', owner: 'Camila Prado', category: 'Design', priority: 'Média', deadline: '2026-11-12', status: 'Em revisão', progress: 88, done: 29, total: 33, description: 'Novo fluxo de onboarding e navegação inferior.' },
   { id: 4, name: 'Painel de Métricas de Vendas', owner: 'Bruno Tavares', category: 'Dados', priority: 'Média', deadline: '2027-01-15', status: 'Em andamento', progress: 27, done: 9, total: 34, description: 'Consolidação das métricas comerciais em um único painel.' },
