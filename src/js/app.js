@@ -119,41 +119,41 @@ function updateIndicators() {
   $('[data-count="all"]').textContent = projects.length;
 }
 
-const PRIORITY_STYLE = {
-  Alta: 'bg-red-50 text-red-700 dark:bg-red-500/15 dark:text-red-300',
-  Média: 'bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300',
-  Baixa: 'bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-300'
+const CATEGORY_STRIPE = {
+  Desenvolvimento: 'border-t-orange-600', Design: 'border-t-rose-500', Dados: 'border-t-sky-600',
+  Infraestrutura: 'border-t-emerald-600', Marketing: 'border-t-amber-500'
 };
+const PRIORITY_MARK = { Alta: '●●●', Média: '●●○', Baixa: '●○○' };
 
 function projectCard(project, isFirst) {
   const wide = project.priority === 'Alta';
   const size = isFirst && wide ? 'sm:col-span-2 xl:row-span-2' : wide ? 'sm:col-span-2' : '';
-  const bar = project.status === 'Concluído' ? 'bg-emerald-500' : 'bg-teal-600 dark:bg-teal-400';
-  const description = wide ? `<p class="mt-3 text-sm leading-relaxed text-stone-600 dark:text-stone-400">${escapeHtml(project.description)}</p>` : '';
   const pending = project.total - project.done;
+  const barColor = project.status === 'Concluído' ? 'bg-emerald-600' : 'bg-clay';
+  const description = wide ? `<p class="mt-3 max-w-prose text-sm leading-relaxed text-stone-600 dark:text-stone-400">${escapeHtml(project.description)}</p>` : '';
   return `
-  <article class="group flex flex-col justify-between gap-5 rounded-xl border border-stone-200 bg-white p-5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-teal-600/50 dark:border-stone-800 dark:bg-stone-900 dark:hover:border-teal-500/50 ${size}">
+  <article class="group flex flex-col justify-between gap-8 border border-t-4 border-x-ink/20 border-b-ink/20 ${CATEGORY_STRIPE[project.category]} bg-white/50 p-5 transition-all duration-200 ease-out hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-white hover:shadow-[6px_6px_0_0_#171512] dark:border-x-paper/20 dark:border-b-paper/20 dark:bg-paper/5 dark:hover:bg-paper/10 dark:hover:shadow-[6px_6px_0_0_#f3eee3]">
     <div>
-      <div class="flex flex-wrap items-center justify-between gap-2">
-        <span class="text-xs font-semibold text-stone-500 dark:text-stone-400">${escapeHtml(project.category)} · ${escapeHtml(TEAM_BY_CATEGORY[project.category])}</span>
-        <span class="rounded-full px-2 py-0.5 text-xs font-semibold ${PRIORITY_STYLE[project.priority]}">${project.priority}</span>
+      <div class="flex items-center justify-between gap-2 text-[11px] font-semibold uppercase tracking-[.16em] text-stone-500 dark:text-stone-400">
+        <span>${escapeHtml(project.category)} · ${escapeHtml(TEAM_BY_CATEGORY[project.category])}</span>
+        <span class="tracking-widest text-clay" title="Prioridade ${project.priority.toLowerCase()}" aria-label="Prioridade ${project.priority.toLowerCase()}">${PRIORITY_MARK[project.priority]}</span>
       </div>
       <div class="mt-3 flex items-start justify-between gap-3">
-        <h3 class="text-base font-bold leading-snug ${wide ? 'sm:text-lg' : ''}">${escapeHtml(project.name)}</h3>
-        <svg class="icon h-4 w-4 shrink-0 translate-y-1 text-teal-600 opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 dark:text-teal-400" aria-hidden="true"><use href="#i-arrow"/></svg>
+        <h3 class="font-serif font-bold leading-snug ${wide ? 'text-2xl' : 'text-xl'}">${escapeHtml(project.name)}</h3>
+        <svg class="icon h-5 w-5 shrink-0 translate-y-1 text-clay opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100" aria-hidden="true"><use href="#i-arrow"/></svg>
       </div>
       ${description}
     </div>
     <div>
-      <div class="mb-1.5 flex items-center justify-between text-xs">
-        <span class="font-semibold">${project.status}</span>
-        <span class="tabular-nums text-stone-500 dark:text-stone-400">${project.progress}%${project.total ? ` · ${pending} pendentes` : ''}</span>
+      <div class="flex items-end justify-between gap-3">
+        <p class="font-serif font-bold leading-none tabular-nums ${wide ? 'text-6xl' : 'text-4xl'}">${project.progress}<span class="text-xl text-stone-500">%</span></p>
+        <p class="text-right text-xs font-semibold">${project.status}<span class="block font-normal text-stone-500 dark:text-stone-400">${project.total ? `${pending} tarefas pendentes` : 'sem tarefas ainda'}</span></p>
       </div>
-      <div class="h-1.5 overflow-hidden rounded-full bg-stone-100 dark:bg-stone-800" role="progressbar" aria-valuenow="${project.progress}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso de ${escapeHtml(project.name)}">
-        <div class="h-full rounded-full ${bar} transition-all duration-500 ease-out" style="width:${project.progress}%"></div>
+      <div class="mt-3 h-1.5 bg-ink/10 dark:bg-paper/15" role="progressbar" aria-valuenow="${project.progress}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso de ${escapeHtml(project.name)}">
+        <div class="h-full ${barColor} transition-all duration-500 ease-out" style="width:${project.progress}%"></div>
       </div>
-      <div class="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-stone-500 dark:text-stone-400">
-        <span>${escapeHtml(project.owner)}</span>
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-stone-600 dark:text-stone-400">
+        <span class="font-semibold">${escapeHtml(project.owner)}</span>
         <span class="inline-flex items-center gap-1"><svg class="icon h-3.5 w-3.5"><use href="#i-calendar"/></svg>${formatDate(project.deadline)}</span>
       </div>
     </div>
@@ -203,14 +203,13 @@ function validateField(field) {
 function showBanner(message, type) {
   const banner = $('#form-banner');
   banner.textContent = message;
-  banner.className = `rounded-lg px-3 py-2 text-sm font-medium ${type === 'error'
-    ? 'bg-red-50 text-red-700 dark:bg-red-500/15 dark:text-red-300'
-    : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300'}`;
+  banner.className = type === 'error' ? 'is-error' : 'is-success';
 }
 
 function resetForm() {
   form.reset();
   $('#form-banner').className = 'hidden';
+  $('#form-banner').textContent = '';
   $('#submit-button').disabled = false;
   Object.keys(validators).forEach((field) => {
     const input = form.elements[field];
