@@ -168,4 +168,3 @@ O projeto explora conceitos fundamentais de desenvolvimento Front-End, incluindo
 
 * **Aplicação:** https://luczss.github.io/cp5-frontend/
 * **Repositório:** https://github.com/luczss/cp5-frontend
->>>>>>> b450ebf (fix:nomes)
